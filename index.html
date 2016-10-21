@@ -25,10 +25,9 @@ function init(){
 		cells[j] = [];
 		for(var i =0; i < h; i++){
 			cells[j][i] = {
-				xPos: j,
-				yPos: i,
 				x: width/2 + cellSize*i - cellSize*j,
-				y: 100+height/4- w*cellSize/2 + cellSize/2*j + cellSize/2*i + cellSize/2, 
+				y: w*cellSize/2 + cellSize/2*j + cellSize/2*i + cellSize/2 -h*cellSize/4, 
+				height : 0,//Math.random()*100,
 			};
 		}
 	}
@@ -39,10 +38,22 @@ function drawPlayground(){
 		for(var j = 0; j<h; j++)
 		{
 			var value = cells[i][j];
-			line(value.x+cellSize, value.y, value.x, value.y+cellSize/2);
-			line(value.x-cellSize, value.y, value.x, value.y+cellSize/2);
-			line(value.x+cellSize, value.y, value.x, value.y-cellSize/2);
-			line(value.x-cellSize, value.y, value.x, value.y-cellSize/2);
+			if(i < w - 1){
+				line(value.x, value.y + value.height, cells[i+1][j].x, cells[i+1][j].y+cells[i+1][j].height);
+			}
+			
+			if(j < h - 1){
+				line(value.x, value.y + value.height, cells[i][j+1].x, cells[i][j+1].y+cells[i][j+1].height);
+			}
+			
+			if(i > 0){
+				line(value.x, value.y + value.height, cells[i-1][j].x, cells[i-1][j].y+cells[i-1][j].height);
+			}
+			
+			if(j > 0){
+				line(value.x, value.y + value.height, cells[i][j-1].x, cells[i][j-1].y+cells[i][j-1].height);
+			}
+			
 		}
 	}
 }
